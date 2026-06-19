@@ -5,6 +5,8 @@ import TaskFilter from '../TaskFilter/TaskFilter';
 import TaskForm from '../TaskForm/TaskForm';
 import { getTasks, createTask, updateTask, deleteTask, toggleTask } from '../../services/api';
 
+const PRIORITY_ORDER = { low: 1, medium: 2, high: 3 };
+
 // Main app component that manages tasks and logic
 function App() {
     const [tasks, setTasks] = useState([]);
@@ -14,6 +16,7 @@ function App() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [search ,setSearch] = useState('');
+    const [sort, setSort]= useState('date');
 
     useEffect(() => {
         loadTasks();
@@ -89,6 +92,13 @@ function App() {
         return task.title.toLowerCase().includes(search.toLowerCase());
     });
 
+    // Sort filtered tasks by date or priority
+    const sortedTasks = [...filteredTasks].sort((a, b) => {
+        if (sort === 'date') return new Date(b.createdAt) - new Date(a.createdAt);
+        if (sort === 'priority') return PRIORITY_ORDER[b.priority] - PRIORITY_ORDER[a.priority];
+        return 0;
+    });
+
     // Render the main app layout
     return (
         <div className="app">
@@ -109,19 +119,29 @@ function App() {
 
                 <TaskFilter filter={filter} onFilterChange={setFilter} tasks={tasks} />
 
-                <input
-                    type="text"
-                    className="search-input"
-                    placeholder="Search tasks..."
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                />
+                <div className="search-sort-bar">
+                    <input
+                        type="text"
+                        className="search-input"
+                        placeholder="Search tasks..."
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                    />
+                    <select
+                        className="sort-select"
+                        value={sort}
+                        onChange={(e) => setSort(e.target.value)}
+                    >
+                        <option value="date">Sort by Date</option>
+                        <option value="priority">Sort by Priority</option>
+                    </select>
+                </div>
 
                 {loading ? (
                     <div className="loading">Loading tasks...</div>
                 ) : (
                     <TaskList
-                        tasks={filteredTasks}
+                        tasks={sortedTasks}
                         onEdit={handleEdit}
                         onDelete={handleDelete}
                         onToggle={handleToggle}
