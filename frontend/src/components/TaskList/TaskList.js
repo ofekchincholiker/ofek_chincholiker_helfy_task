@@ -13,7 +13,7 @@ function TaskList({tasks, onEdit, onDelete, onToggle}) {
 
     //calculate duration so speed stays constant regardless of number of tasks
     requestAnimationFrame(() => {
-        const duration = (track.scrollWidth/2) / SCROLL_SPEED
+        const duration = (track.scrollWidth/2) / SCROLL_SPEED;
         track.style.animationDuration = `${duration}s`;
     });
     }, [tasks]);
