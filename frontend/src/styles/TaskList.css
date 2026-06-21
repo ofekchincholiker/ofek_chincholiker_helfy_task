@@ -1,23 +1,23 @@
 .carousel-container {
-  overflow: hidden;
-  position: relative;
+  display: flex;
+  justify-content: center;
   padding: 20px 0;
+}
+
+.carousel-viewport {
+  width: 1200px;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .carousel-track {
   display: flex;
-  gap: 20px;
-  width: max-content;
-  animation: scroll 30s linear infinite;
+  gap: 30px;
+  will-change: transform;
 }
 
-.carousel-container:hover .carousel-track {
-  animation-play-state: paused;
-}
-
-@keyframes scroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+.carousel-item {
+  flex-shrink: 0;
 }
 
 .carousel-empty {
@@ -28,4 +28,5 @@
   color: #888;
   font-size: 1.1rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
 }

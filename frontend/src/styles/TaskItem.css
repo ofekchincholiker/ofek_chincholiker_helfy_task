@@ -1,6 +1,6 @@
 .task-card {
-  width: 320px;
-  min-height: 420px;
+  width: 380px;
+  min-height: 480px;
   background-color: white;
   border-radius: 12px;
   padding: 20px;
@@ -80,6 +80,7 @@
 .task-date {
   font-size: 0.75rem;
   color: #aaa;
+  margin-top: auto;
 }
 
 .task-actions {
